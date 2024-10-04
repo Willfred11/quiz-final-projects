@@ -1,0 +1,88 @@
+{%extends 'base.html'%}
+{%load static%}
+
+{%block 'title' %}
+ QUIZ APP
+{%endblock%}
+
+{%block 'content' %}
+<form class="the_form">
+    <h1>login</h1>
+   
+    <span class="form-field">
+
+        <input type="text" placeholder="username" class="login-username-pot" required>
+        <label class="error" id="usernameError"></label>
+
+
+        <input type="password" placeholder="password" class="login-password-pot" required>
+        <label class="error" id="passwordError"></label>
+
+    </span>
+    <button id="cre-btn">create</button>
+    <h4>create? <a href="">create account</a></h4>
+</form>
+
+
+<div id="responseMessage"></div>
+
+
+<script>
+   document.querySelector('.the_form').addEventListener('submit', function(event) {
+    event.preventDefault(); 
+  
+    // Clear any previous errors
+    document.querySelectorAll('.error').forEach(function(errorSpan) {
+      errorSpan.textContent = '';
+    });
+  
+
+    const user_namee = document.querySelector('.login-username-pot').value;
+    const pass_words = document.querySelector('.login-password-pot').value;
+
+
+  
+    let isValid = true;
+
+  
+    // Validate username
+    if (user_namee === '') {
+      document.getElementById('usernameError').textContent = 'Username is required.';
+      isValid = false;
+    } else if (user_namee.length < 3) {
+      document.getElementById('usernameError').textContent = 'Username must be at least 3 characters.';
+      isValid = false;
+    }
+  
+    // Validate password
+    if (pass_words === '') {
+      document.getElementById('passwordError').textContent = 'Password is required.';
+      isValid = false;
+    } else if (pass_words.length < 6) {
+      document.getElementById('passwordError').textContent = 'Password must be at least 6 characters.';
+      isValid = false;
+    }
+
+    // comfim validation
+
+
+
+    
+    if (isValid) {
+      window.location.href = '/quizee/quiz'
+    //   document.querySelector('.the_form').submit(); 
+      document.getElementById('cre-btn').submit();
+    }else{
+        alert('incorrect account')
+    }
+
+    document.querySelector('.the_form').reset();
+
+  });
+
+</script>
+
+{%endblock%}
+
+
+

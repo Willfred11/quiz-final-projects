@@ -1,0 +1,188 @@
+{%extends 'base.html'%}
+{%load static%}
+
+{%block 'title' %}
+ QUIZ APP
+{%endblock%}
+
+{%block 'content' %}
+<body style="background-color: pink;">
+     <div class="quiz-container">
+    <div class="quiz-header">
+        <div id="timer">0<span id="time">5</span></div>
+        <h2 id="question">question text</h2>
+        <ul>
+            <li>
+                <input type="radio" name="answer" id="a" class="answer">
+                <label for="a" id="a_text">answer</label>
+            </li>
+
+            <li>
+                <input type="radio" name="answer" id="b" class="answer">
+                <label for="b" id="b_text">answer</label>
+            </li>
+
+            <li>
+                <input type="radio" name="answer" id="c" class="answer">
+                <label for="c" id="c_text">answer</label>
+            </li>
+
+            <li>
+                <input type="radio" name="answer" id="d" class="answer">
+                <label for="d" id="d_text">answer</label>
+            </li>
+        </ul>
+    </div>
+    <button id="submit" class="submit-btn" onclick="nextQuestion()">next</button>
+     </div>
+</body>
+<!-- <script src="{% static 'js/app.js'%}"></script> -->
+
+
+<script>
+    const quizData = [
+	{
+		question: "which language runs in a web browser?",
+		a: "java",
+		b: "c",
+		c: "python",
+		d: "javascript",
+		correct: "d",
+	},
+	{
+		question: "what does css stands for?",
+		a: "centran style sheet",
+		b: "cascading style sheet",
+		c: "cascading simple sheet",
+		d: "casting style sheet",
+		correct: "b",
+
+	},
+	{
+		question: "what does HTML stands for?",
+		a: "hyper text markup language",
+		b: "hyper text markdown language",
+		c: "hyperloop mechine language",
+		d: "hypermake markup language",
+		correct: "a",
+	},
+	{
+		question: "what year was javascript lunched",
+		a: "1996",
+		b: "1995",
+		c: "1994",
+		d: "none of the above",
+		correct: "b",
+	}
+];
+
+const quiz = document.getElementById('quiz')
+const answerEls = document.querySelectorAll('.answer')
+const questionEl = document.getElementById('question')
+const a_text = document.getElementById('a_text')
+const b_text = document.getElementById('b_text')
+const c_text = document.getElementById('c_text')
+const d_text = document.getElementById('d_text')
+const submitBtn = document.getElementById('submit')
+
+
+
+let currentQuiz = 0
+let score = 0
+
+
+loadQuiz()
+
+function loadQuiz() {
+	
+	deselectAnswers()
+
+
+	const currentQuizData = quizData[currentQuiz]
+
+    questionEl.innerText = currentQuizData.question
+	a_text.innerText = currentQuizData.a
+	b_text.innerText = currentQuizData.b
+	c_text.innerText = currentQuizData.c
+	d_text.innerText = currentQuizData.d
+}
+
+function deselectAnswers() {
+	answerEls.forEach(answerEl => answerEl.checked = false)
+}
+
+function getselected() {
+	let answer
+	answerEls.forEach(answerEl => {
+		if(answerEl.checked){
+			answer = answerEl.id
+		}
+	})
+	return answer
+}
+
+submitBtn.addEventListener('click', () => {
+	const answer = getselected()
+	if(answer) {
+		if(answer === quizData[currentQuiz].correct){
+			score++
+		}
+
+		currentQuiz++
+
+		if(currentQuiz < quizData.length) {
+			loadQuiz()
+		}else {
+			quiz.innerHTML = `
+			<h2>You answered ${score}/${quizData.length} questions correctly</h2>
+			<button onclick"location.reload()">Reload</button>
+			`
+		}
+	}
+})
+// timer
+
+
+
+let timeLeft = 5;
+let timerId;
+
+function startTimer(){
+    timeLeft = 5;
+    document.getElementById('time').textContent = timeLeft;
+
+    timerId = setInterval(() => {
+        timeLeft--;
+        document.getElementById('time').textContent = timeLeft;
+
+        if (timeLeft < 0){
+            clearInterval(timerId);
+            // alert("time is up!");
+            // disableOptions();
+            nextQuestion();
+        }
+    }, 1000)
+}
+
+function nextQuestion(){
+    clearInterval(timerId);
+    startTimer();
+
+}
+
+
+
+// function disableOptions(){
+//     answerEls.forEach(button => {
+//         answerEls.disabled = true;
+//     })
+
+// }
+
+window.onload = function(){
+    startTimer()
+}
+
+
+</script>
+{%endblock%}

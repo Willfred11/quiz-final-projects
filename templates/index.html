@@ -1,0 +1,41 @@
+{%extends 'base.html'%}
+{%load static%}
+
+{%block 'title' %}
+ QUIZ APP
+{%endblock%}
+
+{%block 'content' %}
+<form class="the_form">
+    <h1>create account</h1>
+    <img src="{% static 'images/uploadarro.png' %}" width="70" class="upload-arrow" alt="">
+    <div class="text">upload images</div>
+    <span class="form-field">
+
+        <input type="text" placeholder="username" class="username-pot" required>
+        <label class="error" id="usernameError"></label>
+
+
+        <input type="email" placeholder="email" class="email-pot" required>
+        <label class="error" id="emailError"></label>
+
+        <input type="password" placeholder="password" class="password-pot" required>
+        <label class="error" id="passwordError"></label>
+
+        <input type="password" placeholder="comfirm password" class="comfim-pot" required>
+        <label class="error" id="confirmError"></label>
+    </span>
+    <button id="cre-btn">create</button>
+    <h4>alredy a member? <a href="">login</a></h4>
+</form>
+
+<div class="photoupload">
+    <img src="{% static 'images/upload.png' %}" class="img-holder" alt="">
+    <label for="file" id="file-input">upload</label>
+    <input type="file" id="file" required>
+    
+
+</div>
+
+
+{%endblock%}

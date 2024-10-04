@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+{%load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block 'title' %} {%endblock%}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+   
+</head>
+<body>
+    <header>
+        <img src="{% static 'images/logocd.png' %}" alt="" width="50">
+        <nav>
+               <a href="/"> Home </a>
+               <a href=""> About us </a>
+               <a href=""> coursrs </a>
+               <a href=" "> test</a>
+               <a href="{% url 'login' %} ">login</a>
+               <a href="">register</a>
+               <a href="">contact us</a>
+
+        </nav>
+</header>
+<main>
+    {%block 'content' %} {% endblock %}
+</main>
+<footer>
+    <p>&copy; Copyright all rights reserved. Powered by kenneth chukwuma</p>
+</footer>
+    
+</body>
+
+<script src="{% static 'js/app.js'%}"></script>
+</html>
